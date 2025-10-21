@@ -3,10 +3,8 @@ import { Order } from "../models/orderModel.js";
 import { Student } from "../models/studentModel.js";
 
 export const createExam = async (req, res) => {
-  const { title, description, courses, during } = req.body;
-
   try {
-    const newExam = new Exam({ title, description, courses, during });
+    const newExam = new Exam(req.body);
 
     await newExam.save();
 
@@ -132,16 +130,12 @@ export const payToExam = async (req, res) => {
         .json({ key: "exam-not-found", message: "Exam not found" });
     }
 
-    
     await Order.create({
       student: id,
       exam: examId,
       price: exam.price,
       status: "paid",
-    })
-
-
-
+    });
   } catch (err) {
     res.status(500).json({ message: { error: err.message } });
   }

@@ -20,7 +20,7 @@ const orderSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ["paid", "failed", "refunded"],
+      enum: ["pending", "paid", "failed", "refunded"],
     },
   },
   { timestamps: true }
