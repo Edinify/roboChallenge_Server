@@ -28,6 +28,9 @@ const examSchema = new Schema(
       type: Number,
       default: 1,
     },
+    price: {
+      type: Number,
+    },
     isActive: {
       type: Boolean,
       default: true,
