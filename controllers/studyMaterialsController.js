@@ -10,19 +10,12 @@ export const createStudyMaterial = async (req, res) => {
 
     const pdfPath = `/uploads/pdfs/${req.file.filename}`;
 
-    const updatedData = await StudyMaterial.findByIdAndUpdate(
-      id,
-      { pdfUrl: pdfPath },
+    const newData = await StudyMaterial.create(
+      { title: req.body.title, pdfUrl: pdfPath },
       { new: true }
     );
 
-    if (!updatedData) {
-      return res
-        .status(404)
-        .json({ key: "not-found", message: "Study material not found" });
-    }
-
-    res.status(200).json(updatedData);
+    res.status(200).json(newData);
   } catch (err) {
     res.status(500).json({ message: { error: err.message } });
   }
