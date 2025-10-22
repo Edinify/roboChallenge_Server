@@ -36,6 +36,7 @@ import examVersionRoutes from "./routes/examVersionRoutes.js";
 import examVersionQuestionRoutes from "./routes/examVersionQuestionRoutes.js";
 import studentExamRoutes from "./routes/studentExamRoutes.js";
 import studentExamQuestionRoutes from "./routes/studentExamQuestionRoutes.js";
+import studyMaterialsRoutes from "./routes/studyMaterialsRoutes.js";
 
 dotenv.config();
 //
@@ -88,6 +89,7 @@ app.use("/api/exam-version", examVersionRoutes);
 app.use("/api/exam-version-question", examVersionQuestionRoutes);
 app.use("/api/student-exam", studentExamRoutes);
 app.use("/api/student-exam-question", studentExamQuestionRoutes);
+app.use("/api/study-material", studyMaterialsRoutes);
 
 app.get("/", (req, res) => {
   res.send("hello");
