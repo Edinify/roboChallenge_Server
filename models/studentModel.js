@@ -29,6 +29,9 @@ const studentSchema = new Schema(
       type: String,
       default: "student",
     },
+    grade: {
+      type: Number,
+    },
     deleted: {
       type: Boolean,
       default: false,
