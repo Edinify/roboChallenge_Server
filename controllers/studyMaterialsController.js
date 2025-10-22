@@ -10,10 +10,10 @@ export const createStudyMaterial = async (req, res) => {
 
     const pdfPath = `/uploads/pdfs/${req.file.filename}`;
 
-    const newData = await StudyMaterial.create(
-      { title: req.body.title, pdfUrl: pdfPath },
-      { new: true }
-    );
+    const newData = await StudyMaterial.create({
+      title: req.body.title,
+      pdfUrl: pdfPath,
+    });
 
     res.status(200).json(newData);
   } catch (err) {
