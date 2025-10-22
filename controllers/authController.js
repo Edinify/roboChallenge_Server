@@ -75,7 +75,14 @@ export const registerStudent = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-    const student = new Student({ ...req.body, password: hashedPassword });
+    const studentCount = await Student.countDocuments();
+    const studentId = 1010 + studentCount;
+
+    const student = new Student({
+      ...req.body,
+      password: hashedPassword,
+      studentId,
+    });
     await student.save();
 
     res.status(201).json(student);
