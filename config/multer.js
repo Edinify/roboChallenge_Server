@@ -2,17 +2,20 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 
-const uploadPath = "uploads/images";
-if (!fs.existsSync(uploadPath)) {
-  fs.mkdirSync(uploadPath, { recursive: true });
+const imgUploadPath = "uploads/images";
+const pdfUploadPath = "uploads/pdfs";
+
+if (!fs.existsSync(imgUploadPath)) {
+  fs.mkdirSync(imgUploadPath, { recursive: true });
 }
 
-const imageFileFilter = (req, file, cb) => {
+const fileFilter = (req, file, cb) => {
   const allowedMimeTypes = [
     "image/jpeg",
     "image/png",
     "image/svg+xml",
     "image/webp",
+    "application/pdf",
   ];
   if (allowedMimeTypes.includes(file.mimetype)) {
     cb(null, true);
@@ -26,9 +29,20 @@ const imageFileFilter = (req, file, cb) => {
   }
 };
 
-const diskStorage = multer.diskStorage({
+const diskStorageForImg = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, uploadPath);
+    cb(null, imgUploadPath);
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now();
+    const ext = path.extname(file.originalname);
+    cb(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
+  },
+});
+
+const diskStorageForPdf = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, pdfUploadPath);
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now();
@@ -39,6 +53,12 @@ const diskStorage = multer.diskStorage({
 
 export const uploadImage = () =>
   multer({
-    storage: diskStorage,
-    fileFilter: imageFileFilter,
+    storage: diskStorageForImg,
+    fileFilter: fileFilter,
+  });
+
+export const uploadPdf = () =>
+  multer({
+    storage: diskStorageForPdf,
+    fileFilter: fileFilter,
   });
