@@ -51,7 +51,7 @@ export const deleteNews = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const deletedNews = await Student.findByIdAndDelete(id);
+    const deletedNews = await News.findByIdAndDelete(id);
 
     if (!deletedNews) {
       return res.status(404).json({ key: "news-not-found" });
