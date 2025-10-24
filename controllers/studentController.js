@@ -129,9 +129,13 @@ export const updateStudent = async (req, res) => {
       return res.status(409).json({ key: "email-already-exist" });
     }
 
-    const updatedStudent = await Student.findByIdAndUpdate(id, updatedData, {
-      new: true,
-    });
+    const updatedStudent = await Student.findByIdAndUpdate(
+      currentUser._id,
+      updatedData,
+      {
+        new: true,
+      }
+    );
 
     if (!updatedStudent) {
       return res.status(404).json({ key: "student-not-found" });
