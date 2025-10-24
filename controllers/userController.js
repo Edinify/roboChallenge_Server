@@ -1,17 +1,12 @@
 import { Admin } from "../models/adminModel.js";
-import { Teacher } from "../models/teacherModel.js";
-import { Worker } from "../models/workerModel.js";
+import { Student } from "../models/studentModel.js";
 
 export const getCurrentUser = async (userId, role) => {
   try {
     let currentUser;
 
-    if (role === "super-admin") {
+    if (role === "super-admin" || role === "admin") {
       currentUser = await Admin.findById(userId);
-    } else if (role === "worker") {
-      currentUser = await Worker.findById(userId);
-    } else if (role === "teacher") {
-      currentUser = await Teacher.findById(userId);
     } else if (role === "student") {
       currentUser = await Student.findById(userId);
     }

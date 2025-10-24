@@ -104,15 +104,14 @@ export const getStudentsForPagination = async (req, res) => {
 // Update student
 export const updateStudent = async (req, res) => {
   const { email } = req.body;
-  const { id } = req.params;
   const { id: userId, role } = req.user;
   let updatedData = req.body;
 
   const currentUser = await getCurrentUser(userId, role);
 
   try {
-    if (currentUser._id.toString() != id) {
-      return res.status(400).json({ key: "cannot-update-else" });
+    if (!currentUser) {
+      return res.status(404).json({ key: "user-not-found" });
     }
 
     const regexEmail = new RegExp(`^${email}$`, "i");
@@ -200,5 +199,3 @@ export const updateStudentPassword = async (req, res) => {
     res.status(500).json({ message: { error: err.message } });
   }
 };
-
-
