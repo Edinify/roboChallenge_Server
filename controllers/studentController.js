@@ -118,10 +118,11 @@ export const updateStudent = async (req, res) => {
 
     const existingAdmin = await Admin.findOne({
       email: { $regex: regexEmail },
+      _id: { $ne: currentUser._id },
     });
     const existingStudent = await Student.findOne({
       email: { $regex: regexEmail },
-      _id: { $ne: id },
+      _id: { $ne: currentUser._id },
     });
 
     if (email && (existingAdmin || existingStudent)) {
